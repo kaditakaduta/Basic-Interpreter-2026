@@ -26,21 +26,22 @@ class Statement {
 
 class LetStatement : public Statement {
  public:
-  explicit LetStatement(std::string source, std::string name, Expression* expr);
+  explicit LetStatement(std::string source, std::string name,
+                        std::shared_ptr<Expression> expr);
   void execute(VarState& state, Program& program) const final;
 
  private:
   std::string name_;
-  Expression* expr_;
+  std::shared_ptr<Expression> expr_;
 };
 
 class PrintStatement : public Statement {
  public:
-  explicit PrintStatement(std::string source, Expression* expr);
+  explicit PrintStatement(std::string source, std::shared_ptr<Expression> expr);
   void execute(VarState& state, Program& program) const final;
 
  private:
-  Expression* expr_;
+  std::shared_ptr<Expression> expr_;
 };
 
 class InputStatement : public Statement {
@@ -63,11 +64,12 @@ class GotoStatement : public Statement {
 
 class IfStatement : public Statement {
  public:
-  explicit IfStatement(std::string source, CompoundExpression* expL, int line);
+  explicit IfStatement(std::string source,
+                       std::shared_ptr<CompoundExpression> expL, int line);
   void execute(VarState& state, Program& program) const final;
 
  private:
-  CompoundExpression* exp_;
+  std::shared_ptr<CompoundExpression> exp_;
   int line_;
 };
 

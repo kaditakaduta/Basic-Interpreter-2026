@@ -2,7 +2,9 @@
 
 #include "utils/Error.hpp"
 
-void Program::addStmt(int line, Statement* stmt) { recorder_.add(line, stmt); }
+void Program::addStmt(int line, std::shared_ptr<Statement> stmt) {
+  recorder_.add(line, stmt);
+}
 
 void Program::removeStmt(int line) { recorder_.remove(line); }
 
@@ -14,7 +16,7 @@ void Program::run() {
       break;
     }
     int pCnow = programCounter_;
-    execute(const_cast<Statement*>(recorder_.get(programCounter_)));
+    execute(recorder_.get(programCounter_));
     if (pCnow == programCounter_) {  // if "execute" didn't call changePC
       programCounter_ = recorder_.nextLine(programCounter_);
     }
@@ -29,7 +31,9 @@ void Program::clear() {
   vars_.clear();
 }
 
-void Program::execute(Statement* stmt) { stmt->execute(vars_, (*this)); }
+void Program::execute(std::shared_ptr<Statement> stmt) {
+  stmt->execute(vars_, (*this));
+}
 
 int Program::getPC() const noexcept { return programCounter_; }
 

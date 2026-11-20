@@ -2,7 +2,9 @@
 
 #include <iostream>
 
-void Recorder::add(int line, Statement* stmt) { record_[line] = stmt; }
+void Recorder::add(int line, std::shared_ptr<Statement> stmt) {
+  record_[line] = stmt;
+}
 
 void Recorder::remove(int line) {
   if (record_.find(line) != record_.end()) {
@@ -10,7 +12,7 @@ void Recorder::remove(int line) {
   }
 }
 
-const Statement* Recorder::get(int line) const noexcept {
+const std::shared_ptr<Statement> Recorder::get(int line) const noexcept {
   auto it = record_.find(line);
   if (it != record_.end()) {
     return (*it).second;

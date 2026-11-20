@@ -16,14 +16,15 @@ const std::string& Statement::text() const noexcept { return source_; }
 // TODO: Imply interfaces declared in the Statement.hpp.
 
 LetStatement::LetStatement(std::string source, std::string name,
-                           Expression* expr)
+                           std::shared_ptr<Expression> expr)
     : Statement(source), name_(name), expr_(expr) {}
 
 void LetStatement::execute(VarState& state, Program& program) const {
   state.setValue(name_, expr_->evaluate(state));
 }
 
-PrintStatement::PrintStatement(std::string source, Expression* expr)
+PrintStatement::PrintStatement(std::string source,
+                               std::shared_ptr<Expression> expr)
     : Statement(source), expr_(expr) {}
 
 void PrintStatement::execute(VarState& state, Program& program) const {
@@ -62,7 +63,8 @@ void GotoStatement::execute(VarState& state, Program& program) const {
   program.changePC(line_);
 }
 
-IfStatement::IfStatement(std::string source, CompoundExpression* exp, int line)
+IfStatement::IfStatement(std::string source,
+                         std::shared_ptr<CompoundExpression> exp, int line)
     : Statement(source), exp_(exp), line_(line) {}
 
 void IfStatement::execute(VarState& state, Program& program) const {

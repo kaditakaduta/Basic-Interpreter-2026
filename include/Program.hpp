@@ -11,14 +11,14 @@ class Program {
  public:
   Program() = default;
 
-  void addStmt(int line, Statement* stmt);
+  void addStmt(int line, std::shared_ptr<Statement> stmt);
   void removeStmt(int line);
 
   void run();
   void list() const;
   void clear();
 
-  void execute(Statement* stmt);
+  void execute(std::shared_ptr<Statement> stmt);
 
   int getPC() const noexcept;
   void changePC(int line);
