@@ -9,7 +9,7 @@ class Statement;
 
 class Program {
  public:
-  Program();
+  Program() = default;
 
   void addStmt(int line, Statement* stmt);
   void removeStmt(int line);

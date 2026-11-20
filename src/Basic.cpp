@@ -20,6 +20,8 @@ int main() {
     }
     try {
       // TODO: The main function.
+      auto tstream = lexer.tokenize(line);
+      program.execute(parser.parseLine(tstream, line).getStatement());
     } catch (const BasicError& e) {
       std::cout << e.message() << "\n";
     }

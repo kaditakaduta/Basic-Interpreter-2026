@@ -8,7 +8,7 @@
 
 class Recorder {
  public:
-  ~Recorder();
+  ~Recorder() = default;
 
   void add(int line, Statement* stmt);
   void remove(int line);
@@ -19,5 +19,5 @@ class Recorder {
   int nextLine(int line) const noexcept;
 
  private:
-  // TODO.
+  std::map<int, Statement*> record_;
 };
