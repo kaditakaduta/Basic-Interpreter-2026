@@ -39,6 +39,12 @@ int CompoundExpression::evaluate(const VarState& state) const {
         throw BasicError("DIVIDE BY ZERO");
       }
       return lhs / rhs;
+    case '=':
+      return lhs == rhs;
+    case '<':
+      return lhs < rhs;
+    case '>':
+      return lhs > rhs;
     default:
       throw BasicError("UNSUPPORTED OPERATOR");
   }

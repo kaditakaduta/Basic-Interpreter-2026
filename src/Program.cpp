@@ -1,14 +1,23 @@
 #include "Program.hpp"
 
+#include "utils/Error.hpp"
+
 void Program::addStmt(int line, Statement* stmt) { recorder_.add(line, stmt); }
 
 void Program::removeStmt(int line) { recorder_.remove(line); }
 
 void Program::run() {
   programCounter_ = recorder_.nextLine(0);
+  programEnd_ = false;
   while (programCounter_ != -1) {
-    execute(const_cast<Statement*>(recorder_.get(programCounter_)));  // TODO
-    programCounter_ = recorder_.nextLine(programCounter_);
+    if (programEnd_) {
+      break;
+    }
+    int pCnow = programCounter_;
+    execute(const_cast<Statement*>(recorder_.get(programCounter_)));
+    if (pCnow == programCounter_) {  // if "execute" didn't call changePC
+      programCounter_ = recorder_.nextLine(programCounter_);
+    }
   }
   programEnd();
 }
@@ -24,7 +33,13 @@ void Program::execute(Statement* stmt) { stmt->execute(vars_, (*this)); }
 
 int Program::getPC() const noexcept { return programCounter_; }
 
-void Program::changePC(int line) { programCounter_ = line; }
+void Program::changePC(int line) {
+  if (recorder_.hasLine(line)) {
+    programCounter_ = line;
+  } else {
+    throw BasicError("LINE NUMBER ERROR");
+  }
+}
 
 void Program::programEnd() { programEnd_ = true; }
 

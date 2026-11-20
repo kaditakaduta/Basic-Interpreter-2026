@@ -26,12 +26,14 @@ void Recorder::clear() noexcept { record_.clear(); }
 
 void Recorder::printLines() const {
   for (auto rec : record_) {
-    std::cout << rec.first << " " << rec.second->text() << std::endl;
+    if (rec.second != nullptr) {
+      std::cout << rec.second->text() << std::endl;
+    }
   }
 }
 
 int Recorder::nextLine(int line) const noexcept {
-  if (record_.empty() || (*record_.crbegin()).first >= line) {
+  if (record_.empty() || (*record_.crbegin()).first <= line) {
     return -1;
   }  // cannot find: either no statement or at the end.
 
