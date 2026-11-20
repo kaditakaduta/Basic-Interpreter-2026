@@ -1,0 +1,6 @@
+build/
+**/*.o
+.vscode/
+.cache/
+test/hidden/
+.DS_Store
