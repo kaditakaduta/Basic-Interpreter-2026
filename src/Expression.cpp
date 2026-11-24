@@ -19,12 +19,33 @@ CompoundExpression::CompoundExpression(std::shared_ptr<Expression> left,
                                        std::shared_ptr<Expression> right)
     : left_(left), right_(right), op_(op) {}
 
-CompoundExpression::~CompoundExpression() {
-  // delete left_;
-  // delete right_;
+int CompoundExpression::evaluate(const VarState& state) const {
+  int lhs = left_->evaluate(state);
+  int rhs = right_->evaluate(state);
+
+  switch (op_) {
+    case '+':
+      return lhs + rhs;
+    case '-':
+      return lhs - rhs;
+    case '*':
+      return lhs * rhs;
+    case '/':
+      if (rhs == 0) {
+        throw BasicError("DIVIDE BY ZERO");
+      }
+      return lhs / rhs;
+    default:
+      // throw BasicError("UNSUPPORTED OPERATOR");
+      throw BasicError("SYNTAX ERROR");
+  }
 }
 
-int CompoundExpression::evaluate(const VarState& state) const {
+CompareExpression::CompareExpression(std::shared_ptr<Expression> left, char op,
+                                     std::shared_ptr<Expression> right)
+    : left_(left), right_(right), op_(op) {}
+
+int CompareExpression::evaluate(const VarState& state) const {
   int lhs = left_->evaluate(state);
   int rhs = right_->evaluate(state);
 
@@ -47,6 +68,7 @@ int CompoundExpression::evaluate(const VarState& state) const {
     case '>':
       return lhs > rhs;
     default:
-      throw BasicError("UNSUPPORTED OPERATOR");
+      // throw BasicError("UNSUPPORTED OPERATOR");
+      throw BasicError("SYNTAX ERROR");
   }
 }

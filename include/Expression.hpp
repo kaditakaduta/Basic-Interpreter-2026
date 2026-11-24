@@ -35,7 +35,18 @@ class CompoundExpression : public Expression {
  public:
   CompoundExpression(std::shared_ptr<Expression> left, char op,
                      std::shared_ptr<Expression> right);
-  ~CompoundExpression();
+  int evaluate(const VarState& state) const override;
+
+ private:
+  std::shared_ptr<Expression> left_;
+  std::shared_ptr<Expression> right_;
+  char op_;
+};
+
+class CompareExpression : public Expression {
+ public:
+  CompareExpression(std::shared_ptr<Expression> left, char op,
+                    std::shared_ptr<Expression> right);
   int evaluate(const VarState& state) const override;
 
  private:

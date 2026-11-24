@@ -65,11 +65,11 @@ class GotoStatement : public Statement {
 class IfStatement : public Statement {
  public:
   explicit IfStatement(std::string source,
-                       std::shared_ptr<CompoundExpression> expL, int line);
+                       std::shared_ptr<CompareExpression> expL, int line);
   void execute(VarState& state, Program& program) const final;
 
  private:
-  std::shared_ptr<CompoundExpression> exp_;
+  std::shared_ptr<CompareExpression> exp_;
   int line_;
 };
 

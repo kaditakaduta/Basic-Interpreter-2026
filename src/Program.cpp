@@ -3,6 +3,9 @@
 #include "utils/Error.hpp"
 
 void Program::addStmt(int line, std::shared_ptr<Statement> stmt) {
+  if (line <= 0) {
+    throw BasicError("LINE NUMBER ERROR");  // 只允许正整数行号
+  }
   recorder_.add(line, stmt);
 }
 

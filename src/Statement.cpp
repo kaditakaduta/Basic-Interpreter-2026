@@ -64,7 +64,7 @@ void GotoStatement::execute(VarState& state, Program& program) const {
 }
 
 IfStatement::IfStatement(std::string source,
-                         std::shared_ptr<CompoundExpression> exp, int line)
+                         std::shared_ptr<CompareExpression> exp, int line)
     : Statement(source), exp_(exp), line_(line) {}
 
 void IfStatement::execute(VarState& state, Program& program) const {
