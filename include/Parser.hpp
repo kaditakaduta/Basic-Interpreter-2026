@@ -52,7 +52,7 @@ class Parser {
                                               int precedence) const;
 
   int getPrecedence(TokenType op) const;
-  int parseLiteral(const Token* token) const;
+  int parseLiteral(const std::shared_ptr<Token> token) const;
 
   mutable int leftParentCount{0};
 };

@@ -35,7 +35,9 @@ void Program::clear() {
 }
 
 void Program::execute(std::shared_ptr<Statement> stmt) {
-  stmt->execute(vars_, (*this));
+  if (stmt) {  // safe check, CRITICAL!!
+    stmt->execute(vars_, (*this));
+  }
 }
 
 int Program::getPC() const noexcept { return programCounter_; }

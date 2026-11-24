@@ -3,15 +3,15 @@
 TokenStream::TokenStream(std::vector<Token>&& tokens)
     : tokens_(std::move(tokens)), cursor_(0) {}
 
-const Token* TokenStream::peek() const {
+const std::shared_ptr<Token> TokenStream::peek() const {
   if (cursor_ >= tokens_.size()) {
     return nullptr;
   }
-  return &tokens_[cursor_];
+  return std::make_shared<Token>(tokens_[cursor_]);
 }
 
-const Token* TokenStream::get() {
-  const Token* current = peek();
+const std::shared_ptr<Token> TokenStream::get() {
+  const std::shared_ptr<Token> current = peek();
   if (current != nullptr) {
     ++cursor_;
   }

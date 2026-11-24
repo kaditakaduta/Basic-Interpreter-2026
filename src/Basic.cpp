@@ -21,24 +21,35 @@ int main() {
     try {
       // TODO: The main function.
       auto tstream = lexer.tokenize(line);
-      if (tstream.peek()->type == TokenType::RUN) {
+      auto peek = tstream.peek();
+      if (peek == nullptr) {
+        continue;
+      }
+      if (peek->type == TokenType::RUN) {
         program.run();
-      } else if (tstream.peek()->type == TokenType::LIST) {
+      } else if (peek->type == TokenType::LIST) {
         program.list();
-      } else if (tstream.peek()->type == TokenType::CLEAR) {
+      } else if (peek->type == TokenType::CLEAR) {
         program.clear();
-      } else if (tstream.peek()->type == TokenType::HELP) {
+      } else if (peek->type == TokenType::HELP) {
         std::cout << "Welcome to Basic Interpreter!" << std::endl;
-      } else if (tstream.peek()->type == TokenType::QUIT) {
+      } else if (peek->type == TokenType::QUIT) {
         return 0;
-      } else if (tstream.peek()->type == TokenType::NUMBER) {
-        auto s = tstream.peek()->text;
-        program.addStmt(std::stoi(s),
-                        parser.parseLine(tstream, line).getStatement());
-      } else if (tstream.peek()->type == TokenType::UNKNOWN) {
-        throw("SYNTAX ERROR");
+      } else if (peek->type == TokenType::NUMBER) {
+        auto s = peek->text;
+        auto stmt = (parser.parseLine(tstream, line).getStatement());
+        if (stmt != nullptr) {
+          program.addStmt(std::stoi(s), stmt);
+        } else {
+          program.removeStmt(std::stoi(s));
+        }
+      } else if (peek->type == TokenType::UNKNOWN) {
+        throw BasicError("SYNTAX ERROR");
       } else {
-        program.execute(parser.parseLine(tstream, line).getStatement());
+        auto stmt = (parser.parseLine(tstream, line).getStatement());
+        if (stmt != nullptr) {
+          program.execute(stmt);
+        }
       }
     } catch (const BasicError& e) {
       std::cout << e.message() << "\n";

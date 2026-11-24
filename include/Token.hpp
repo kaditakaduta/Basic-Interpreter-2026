@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -48,8 +49,8 @@ class TokenStream {
   TokenStream() = default;
   explicit TokenStream(std::vector<Token>&& tokens);
 
-  const Token* peek() const;
-  const Token* get();
+  const std::shared_ptr<Token> peek() const;
+  const std::shared_ptr<Token> get();
   bool empty() const;
   void reset();
 
