@@ -42,7 +42,7 @@ void InputStatement::execute(VarState& state, Program& program) const {
     std::getline(std::cin, vals);
     flag = true;
     for (auto& c : vals) {
-      if (!isdigit(c) && c != '-' && c != ' ') {
+      if (!isdigit(c) && c != '-' && !isblank(c)) {
         std::cout << "INVALID NUMBER" << std::endl;
         flag = false;
         break;
@@ -88,4 +88,16 @@ EndStatement::EndStatement(std::string source) : Statement(source) {}
 
 void EndStatement::execute(VarState& state, Program& program) const {
   program.programEnd();
+}
+
+IndentStatement::IndentStatement(std::string source) : Statement(source) {}
+
+void IndentStatement::execute(VarState& state, Program& program) const {
+  state.Indent();
+}
+
+DedentStatement::DedentStatement(std::string source) : Statement(source) {}
+
+void DedentStatement::execute(VarState& state, Program& program) const {
+  state.Dedent();
 }

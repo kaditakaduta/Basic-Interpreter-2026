@@ -4,16 +4,35 @@
 
 #include "utils/Error.hpp"
 
+VarState::VarState() {
+  values_.push_back(std::unordered_map<std::string, int>());
+}
+
 void VarState::setValue(const std::string& name, int value) {
-  values_[name] = value;
+  values_[indentcnt_][name] = value;
 }
 
 int VarState::getValue(const std::string& name) const {
-  auto it = values_.find(name);
-  if (it == values_.end()) {
-    throw BasicError("VARIABLE NOT DEFINED");
+  for (int i = indentcnt_; i >= 0; --i) {
+    auto it = values_[i].find(name);
+    if (it != values_[i].end()) {
+      return it->second;
+    }
   }
-  return it->second;
+  throw BasicError("VARIABLE NOT DEFINED");
 }
 
 void VarState::clear() { values_.clear(); }
+
+void VarState::Indent() {
+  indentcnt_++;
+  values_.push_back(std::unordered_map<std::string, int>());
+}
+
+void VarState::Dedent() {
+  if (indentcnt_ == 0) {
+    throw BasicError("SCOPE UNDERFLOW");
+  }
+  indentcnt_--;
+  values_.pop_back();
+}

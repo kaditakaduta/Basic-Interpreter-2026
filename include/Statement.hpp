@@ -84,3 +84,15 @@ class EndStatement : public Statement {
   explicit EndStatement(std::string source);
   void execute(VarState& state, Program& program) const final;
 };
+
+class IndentStatement : public Statement {
+ public:
+  explicit IndentStatement(std::string source);
+  void execute(VarState& state, Program& program) const final;
+};
+
+class DedentStatement : public Statement {
+ public:
+  explicit DedentStatement(std::string source);
+  void execute(VarState& state, Program& program) const final;
+};

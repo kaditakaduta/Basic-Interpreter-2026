@@ -46,6 +46,10 @@ class Parser {
                                       const std::string& originLine) const;
   std::shared_ptr<Statement> parseEnd(TokenStream& tokens,
                                       const std::string& originLine) const;
+  std::shared_ptr<Statement> parseIndent(TokenStream& tokens,
+                                         const std::string& originLine) const;
+  std::shared_ptr<Statement> parseDedent(TokenStream& tokens,
+                                         const std::string& originLine) const;
 
   std::shared_ptr<Expression> parseExpression(TokenStream& tokens) const;
   std::shared_ptr<Expression> parseExpression(TokenStream& tokens,
