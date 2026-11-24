@@ -16,5 +16,4 @@ class VarState {
 
  private:
   std::vector<std::unordered_map<std::string, int>> values_;
-  int indentcnt_ = 0;
 };

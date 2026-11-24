@@ -9,11 +9,11 @@ VarState::VarState() {
 }
 
 void VarState::setValue(const std::string& name, int value) {
-  values_[indentcnt_][name] = value;
+  (*values_.rbegin())[name] = value;
 }
 
 int VarState::getValue(const std::string& name) const {
-  for (int i = indentcnt_; i >= 0; --i) {
+  for (int i = values_.size() - 1; i >= 0; --i) {
     auto it = values_[i].find(name);
     if (it != values_[i].end()) {
       return it->second;
@@ -25,14 +25,12 @@ int VarState::getValue(const std::string& name) const {
 void VarState::clear() { values_.clear(); }
 
 void VarState::Indent() {
-  indentcnt_++;
   values_.push_back(std::unordered_map<std::string, int>());
 }
 
 void VarState::Dedent() {
-  if (indentcnt_ == 0) {
+  if (values_.size() == 1) {
     throw BasicError("SCOPE UNDERFLOW");
   }
-  indentcnt_--;
   values_.pop_back();
 }
