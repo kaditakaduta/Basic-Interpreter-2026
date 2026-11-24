@@ -39,7 +39,7 @@ void InputStatement::execute(VarState& state, Program& program) const {
   bool flag = false;
   while (true) {
     std::cout << " ? ";
-    std::getline(std::cin, vals);
+    if (!std::getline(std::cin, vals)) break;
     flag = true;
     for (auto& c : vals) {
       if (!isdigit(c) && c != '-' && !isblank(c)) {

@@ -22,7 +22,7 @@ int VarState::getValue(const std::string& name) const {
   throw BasicError("VARIABLE NOT DEFINED");
 }
 
-void VarState::clear() { values_.clear(); }
+void VarState::clear() { values_ = {std::unordered_map<std::string, int>()}; }
 
 void VarState::Indent() {
   values_.push_back(std::unordered_map<std::string, int>());
