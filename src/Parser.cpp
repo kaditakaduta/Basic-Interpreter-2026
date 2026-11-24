@@ -11,8 +11,6 @@
 
 ParsedLine::ParsedLine() { statement_ = nullptr; }
 
-ParsedLine::~ParsedLine() {}
-
 void ParsedLine::setLine(int line) { line_number_.emplace(line); }
 
 std::optional<int> ParsedLine::getLine() { return line_number_; }

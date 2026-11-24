@@ -15,7 +15,7 @@ class ParsedLine {
 
  public:
   ParsedLine();
-  ~ParsedLine();
+  ~ParsedLine() = default;
 
   void setLine(int line);
   std::optional<int> getLine();
