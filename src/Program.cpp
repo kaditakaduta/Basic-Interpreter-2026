@@ -9,7 +9,12 @@ void Program::addStmt(int line, std::shared_ptr<Statement> stmt) {
   recorder_.add(line, stmt);
 }
 
-void Program::removeStmt(int line) { recorder_.remove(line); }
+void Program::removeStmt(int line) {
+  if (line <= 0) {
+    throw BasicError("LINE NUMBER ERROR");  // 只允许正整数行号
+  }
+  recorder_.remove(line);
+}
 
 void Program::run() {
   programCounter_ = recorder_.nextLine(0);
