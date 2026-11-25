@@ -36,8 +36,8 @@ int CompoundExpression::evaluate(const VarState& state) const {
       }
       return lhs / rhs;
     default:
-      // throw BasicError("UNSUPPORTED OPERATOR");
-      throw BasicError("SYNTAX ERROR");
+      throw BasicError("UNSUPPORTED OPERATOR");
+      // throw BasicError("SYNTAX ERROR");
   }
 }
 
@@ -57,7 +57,7 @@ int CompareExpression::evaluate(const VarState& state) const {
     case '>':
       return lhs > rhs;
     default:
-      // throw BasicError("UNSUPPORTED OPERATOR");
-      throw BasicError("SYNTAX ERROR");
+      throw BasicError("UNSUPPORTED OPERATOR");
+      // throw BasicError("SYNTAX ERROR");
   }
 }

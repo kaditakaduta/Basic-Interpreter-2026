@@ -259,8 +259,8 @@ std::shared_ptr<Expression> Parser::parseExpression(TokenStream& tokens,
     left = parseExpression(tokens, 0);
 
     if (tokens.empty() || tokens.get()->type != TokenType::RIGHT_PAREN) {
-      // throw BasicError("MISMATCHED PARENTHESIS");
-      throw BasicError("SYNTAX ERROR");
+      throw BasicError("MISMATCHED PARENTHESIS");
+      // throw BasicError("SYNTAX ERROR");
     }
     --leftParentCount;
   } else {
@@ -277,8 +277,8 @@ std::shared_ptr<Expression> Parser::parseExpression(TokenStream& tokens,
     // 检查是否是右括号
     if (opToken->type == TokenType::RIGHT_PAREN) {
       if (leftParentCount == 0) {
-        // throw BasicError("MISMATCHED PARENTHESIS");
-        throw BasicError("SYNTAX ERROR");
+        throw BasicError("MISMATCHED PARENTHESIS");
+        // throw BasicError("SYNTAX ERROR");
       }
       break;
     }
@@ -342,14 +342,14 @@ int Parser::parseLiteral(const std::shared_ptr<Token> token) const {
 
     // 检查是否整个字符串都被解析
     if (pos != token->text.length()) {
-      // throw BasicError("INT LITERAL OVERFLOW");
-      throw BasicError("SYNTAX ERROR");
+      throw BasicError("INT LITERAL OVERFLOW");
+      // throw BasicError("SYNTAX ERROR");
     }
 
     return value;
   } catch (const std::out_of_range&) {
-    // throw BasicError("INT LITERAL OVERFLOW");
-    throw BasicError("SYNTAX ERROR");
+    throw BasicError("INT LITERAL OVERFLOW");
+    // throw BasicError("SYNTAX ERROR");
   } catch (const std::invalid_argument&) {
     throw BasicError("SYNTAX ERROR");
   }
