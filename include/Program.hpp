@@ -9,7 +9,7 @@ class Statement;
 
 class Program {
  public:
-  Program() = default;
+  Program();
 
   void addStmt(int line, std::shared_ptr<Statement> stmt);
   void removeStmt(int line);

@@ -2,6 +2,8 @@
 
 #include "utils/Error.hpp"
 
+Program::Program() : programCounter_(0), programEnd_(false), pcChanged_(false) {}
+
 void Program::addStmt(int line, std::shared_ptr<Statement> stmt) {
   if (line <= 0) {
     throw BasicError("LINE NUMBER ERROR");  // 只允许正整数行号
