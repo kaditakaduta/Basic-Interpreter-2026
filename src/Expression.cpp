@@ -50,17 +50,6 @@ int CompareExpression::evaluate(const VarState& state) const {
   int rhs = right_->evaluate(state);
 
   switch (op_) {
-    case '+':
-      return lhs + rhs;
-    case '-':
-      return lhs - rhs;
-    case '*':
-      return lhs * rhs;
-    case '/':
-      if (rhs == 0) {
-        throw BasicError("DIVIDE BY ZERO");
-      }
-      return lhs / rhs;
     case '=':
       return lhs == rhs;
     case '<':

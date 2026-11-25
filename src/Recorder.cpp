@@ -28,9 +28,9 @@ void Recorder::clear() noexcept { record_.clear(); }
 
 void Recorder::printLines() const {
   for (auto rec : record_) {
-    if (rec.second != nullptr) {
-      std::cout << rec.second->text() << std::endl;
-    }
+    // if (rec.second != nullptr) {
+    std::cout << rec.second->text() << std::endl;
+    //}
   }
 }
 
@@ -39,7 +39,7 @@ int Recorder::nextLine(int line) const noexcept {
     return -1;
   }  // cannot find: either no statement or at the end.
 
-  auto it = record_.find(line);
+  /*auto it = record_.find(line);
   if (it != record_.end()) {  // if this "line" exists, skip to the next line in
                               // the list.
     ++it;
@@ -47,7 +47,7 @@ int Recorder::nextLine(int line) const noexcept {
       return (*it).first;
     }
     return -1;  // actually cannot reach!
-  }
+  }*/
 
   ++line;  // if this line does not exist, try to find the following line.
   while (record_.find(line) == record_.end()) {

@@ -32,16 +32,21 @@ int main() {
       } else if (peek->type == TokenType::CLEAR) {
         program.clear();
       } else if (peek->type == TokenType::HELP) {
-        std::cout << "Welcome to Basic Interpreter!" << std::endl;
+        throw "ERROR";
       } else if (peek->type == TokenType::QUIT) {
         return 0;
       } else if (peek->type == TokenType::NUMBER) {
-        auto s = peek->text;
+        int s;
+        try {
+          s = std::stoi(peek->text);
+        } catch (const std::exception& e) {
+          throw BasicError("SYNTAX ERROR");
+        }
         auto stmt = (parser.parseLine(tstream, line).getStatement());
         if (stmt != nullptr) {
-          program.addStmt(std::stoi(s), stmt);
+          program.addStmt(s, stmt);
         } else {
-          program.removeStmt(std::stoi(s));
+          program.removeStmt(s);
         }
       } else if (peek->type == TokenType::UNKNOWN) {
         throw BasicError("SYNTAX ERROR");
