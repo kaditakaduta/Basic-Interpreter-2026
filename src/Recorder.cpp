@@ -35,7 +35,12 @@ void Recorder::printLines() const {
 }
 
 int Recorder::nextLine(int line) const noexcept {
-  if (record_.empty() || (*record_.crbegin()).first <= line) {
+  if (line == 0) {
+    if (!record_.empty()) {
+      return (*record_.begin()).first;
+    }
+  }
+  if (record_.empty() || (*record_.crbegin()).first <= line || line < 0) {
     return -1;
   }  // cannot find: either no statement or at the end.
 

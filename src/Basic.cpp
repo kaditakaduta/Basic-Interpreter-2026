@@ -23,9 +23,8 @@ int main() {
       auto tstream = lexer.tokenize(line);
       auto peek = tstream.peek();
       if (peek == nullptr) {
-        continue;
-      }
-      if (peek->type == TokenType::RUN) {
+        throw BasicError("SYNTAX ERROR");
+      } else if (peek->type == TokenType::RUN) {
         program.run();
       } else if (peek->type == TokenType::LIST) {
         program.list();
