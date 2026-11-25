@@ -24,6 +24,12 @@ int VarState::getValue(const std::string& name) const {
 
 void VarState::clear() { values_ = {std::unordered_map<std::string, int>()}; }
 
+void VarState::resetScopes() {
+  while (values_.size() > 1) {
+    values_.pop_back();
+  }
+}
+
 void VarState::Indent() {
   values_.push_back(std::unordered_map<std::string, int>());
 }

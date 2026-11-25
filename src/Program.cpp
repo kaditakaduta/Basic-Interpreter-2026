@@ -17,8 +17,9 @@ void Program::removeStmt(int line) {
 }
 
 void Program::run() {
-  programCounter_ = recorder_.nextLine(0);
   programEnd_ = false;
+  vars_.resetScopes();
+  programCounter_ = recorder_.nextLine(0);
   while (programCounter_ != -1) {
     if (programEnd_) {
       break;

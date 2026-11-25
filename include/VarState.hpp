@@ -11,6 +11,7 @@ class VarState {
   void setValue(const std::string& name, int value);
   int getValue(const std::string& name) const;
   void clear();
+  void resetScopes();
   void Indent();
   void Dedent();
 
