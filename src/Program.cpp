@@ -23,9 +23,9 @@ void Program::run() {
     if (programEnd_) {
       break;
     }
-    int pCnow = programCounter_;
+    pcChanged_ = false;
     execute(recorder_.get(programCounter_));
-    if (pCnow == programCounter_) {  // if "execute" didn't call changePC
+    if (!pcChanged_) {  // if "execute" didn't call changePC
       programCounter_ = recorder_.nextLine(programCounter_);
     }
   }
@@ -49,6 +49,7 @@ int Program::getPC() const noexcept { return programCounter_; }
 
 void Program::changePC(int line) {
   if (recorder_.hasLine(line)) {
+    pcChanged_ = true;
     programCounter_ = line;
   } else {
     throw BasicError("LINE NUMBER ERROR");
