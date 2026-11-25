@@ -35,28 +35,17 @@ InputStatement::InputStatement(std::string source, std::string name)
     : Statement(source), name_(name) {}
 
 void InputStatement::execute(VarState& state, Program& program) const {
-  std::string vals;
-  bool flag = false;
+  std::string line;
   while (true) {
     std::cout << " ? ";
-    if (!std::getline(std::cin, vals)) break;
-    flag = true;
-    for (auto& c : vals) {
-      if (!isdigit(c) && c != '-' && !isblank(c)) {
-        std::cout << "INVALID NUMBER" << std::endl;
-        flag = false;
-        break;
-      }
-    }
-    if (flag) {
-      int val;
-      try {
-        val = std::stoi(vals);
-      } catch (const std::exception& e) {
-        std::cout << "INVALID NUMBER" << std::endl;
-        continue;
-      }
-      state.setValue(name_, val);
+    if (!std::getline(std::cin, line)) break;
+    std::istringstream iss(line);
+    int v;
+    std::string rest;
+    if (!(iss >> v) || (iss >> rest)) {
+      std::cout << "INVALID NUMBER" << std::endl;
+    } else {
+      state.setValue(name_, v);
       return;
     }
   }
